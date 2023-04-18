@@ -22,8 +22,9 @@ class Product extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/detail', arguments: item);
             },
-            child: SizedBox(
+            child: Container(
               height: 100,
+              alignment: Alignment.center,
               child: Image.network(
                 item.imageUrl,
                 fit: BoxFit.cover,
@@ -51,7 +52,8 @@ class Product extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: onLikePressed,
-                      icon: const Icon(Icons.favorite_border),
+                      icon: Icon(
+                          item.isLike ? Icons.favorite : Icons.favorite_border),
                     ),
                     IconButton(
                       onPressed: onAddToCartPressed,

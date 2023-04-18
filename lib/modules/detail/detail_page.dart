@@ -21,26 +21,30 @@ class DetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              item.imageUrl, // URL hình ảnh sản phẩm
-              height: 200, // Chiều cao của hình ảnh
-              fit: BoxFit.cover, // Kiểu hiển thị hình ảnh
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Product Name: ${item.title}',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Container(
+              alignment: Alignment.center,
+              child: Image.network(
+                item.imageUrl,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 8),
-            Text(
-              'Price: ${item.price}', // Giá sản phẩm
-              style: const TextStyle(fontSize: 18, color: Colors.red),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                '${item.price} \$',
+                style: const TextStyle(fontSize: 18, color: Colors.red),
+              ),
             ),
             const SizedBox(height: 16),
-            Text(
-              'Description: ${item.description}', // Mô tả sản phẩm
-              style: const TextStyle(fontSize: 16),
-            ),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                item.description,
+                style: const TextStyle(fontSize: 16),
+              ),
+            )
           ],
         ),
       ),

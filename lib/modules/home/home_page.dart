@@ -27,9 +27,7 @@ class _HomePageState extends State<HomePage> {
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
       setState(() {
-        itemList = jsonResponse
-            .map((json) => Item.fromJson(json))
-            .toList();
+        itemList = jsonResponse.map((json) => Item.fromJson(json)).toList();
       });
     } else {
       throw Exception('Failed to fetch data');
@@ -42,6 +40,13 @@ class _HomePageState extends State<HomePage> {
     fetchData();
   }
 
+  _vote(String id) {
+    setState(() {
+      Item item = itemList.firstWhere((obj) => obj.id == id);
+      item.isLike = !item.isLike;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartState = Provider.of<CartModel>(context);
@@ -52,6 +57,10 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           backgroundColor: MyCustomTheme.appBarColor,
           actions: [
+            IconButton(
+              icon: const Icon(Icons.more_vert),
+              onPressed: () {},
+            ),
             IconButton(
               icon: const Icon(Icons.shopping_cart),
               onPressed: () {
@@ -77,16 +86,14 @@ class _HomePageState extends State<HomePage> {
                 leading: const Icon(Icons.shop),
                 title: const Text('Shop'),
                 onTap: () {
-                  // Xử lý khi người dùng chọn Item 1
-                  Navigator.pop(context);
+                  Navigator.pushReplacementNamed(context, '/');
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.add_card),
                 title: const Text('Order'),
                 onTap: () {
-                  // Xử lý khi người dùng chọn Item 2
-                  Navigator.pushNamed(context, '/cart');
+                  Navigator.pushReplacementNamed(context, '/cart');
                 },
               ),
             ],
@@ -104,7 +111,7 @@ class _HomePageState extends State<HomePage> {
             return Product(
               item: itemList[index],
               onAddToCartPressed: () => {cartState.addCart(itemList[index])},
-              onLikePressed: () => {},
+              onLikePressed: () => {_vote(itemList[index].id)},
             );
           },
         ));
